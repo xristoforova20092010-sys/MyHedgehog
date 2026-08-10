@@ -106,6 +106,8 @@ body{display:flex;align-items:center;justify-content:center}
  position:absolute;z-index:47;bottom:3.1%;left:50%;transform:translateX(-50%);
  display:flex;gap:1.4vw;align-items:center;justify-content:center
 }
+#actionBar .img-button{width:16vw;min-width:138px}
+#hintBtn.img-button{width:14.5vw;padding:0;border:0;background:none;box-shadow:none}
 #volumePanel{
  position:absolute;z-index:120;right:3%;top:12%;width:28%;padding:1.3vw;
  background:linear-gradient(#fff0c7,#e8c57c);border:.26vw solid #6b3d18;border-radius:1.4vw;
@@ -115,6 +117,7 @@ body{display:flex;align-items:center;justify-content:center}
 #volumePanel h3{font-size:clamp(18px,1.7vw,34px);margin:.1vw 0 1vw;text-align:center;color:#456d20}
 .volRow{display:grid;grid-template-columns:34% 1fr 14%;align-items:center;gap:.55vw;margin:.75vw 0;font-weight:bold;font-size:clamp(13px,1.05vw,21px)}
 input[type=range]{width:100%;accent-color:#638d22;cursor:pointer}
+.musicSelect{width:100%;padding:.48vw .6vw;border:.14vw solid #7b491f;border-radius:.65vw;background:#fff4cf;color:#3c220f;font:700 clamp(12px,1vw,19px) Georgia,serif;cursor:pointer}
 #volumePanel .closex{position:absolute;right:.55vw;top:.35vw;background:none;border:0;font-size:1.8vw;cursor:pointer;color:#5a3014}
 #homePanel{
  position:absolute;left:26%;top:18%;width:53%;padding:2.2vw 3vw;text-align:center;z-index:20
@@ -122,6 +125,12 @@ input[type=range]{width:100%;accent-color:#638d22;cursor:pointer}
 #homePanel h1{font-size:clamp(44px,5.6vw,106px);line-height:.9;margin:.2vw 0 .7vw;color:#315d22;text-shadow:0 .12vw #fff1ba,0 .28vw .2vw rgba(0,0,0,.28)}
 #homePanel h2{font-size:clamp(20px,2vw,38px);margin:.2vw 0 2vw;color:#6c377e}
 #homeButtons{display:flex;flex-direction:column;gap:1.1vw;width:58%;margin:auto}
+.home-art-hotspot{position:absolute;z-index:50;border:0;background:transparent;padding:0;cursor:pointer;border-radius:1.5vw;transition:.14s filter,.14s transform}
+.home-art-hotspot:hover{filter:drop-shadow(0 0 1vw #ffe36a) brightness(1.08);transform:scale(1.015)}
+.home-art-hotspot:focus-visible{outline:.28vw solid #fff28a;outline-offset:.18vw}
+#homeStartHot{left:33.2%;top:62.7%;width:30%;height:17%}
+#homeLegendHot{left:33.5%;top:85.2%;width:16%;height:9.5%}
+#homeSettingsHot{left:51.1%;top:85.2%;width:16%;height:9.5%}
 #legendContinue{position:absolute;z-index:50;left:31.5%;bottom:2.2%;width:37%;height:11%;cursor:pointer;border-radius:1.2vw}
 #mapContinue{position:absolute;z-index:50;left:38%;bottom:2.2%;width:28%;height:10.5%;cursor:pointer;border-radius:1.2vw}
 #mapMarker{
@@ -146,9 +155,11 @@ input[type=range]{width:100%;accent-color:#638d22;cursor:pointer}
 .overlay-card .opts{display:flex;gap:.55vw;justify-content:center;margin-top:.35vw}
 .mini-choice{
  min-width:39%;padding:.45vw .5vw;border-radius:.7vw;border:.14vw solid #6c3a16;
- background:linear-gradient(#fff3cc,#e4bd68);color:#4b2811;font-weight:900;
+ background-color:transparent;background-position:center;background-repeat:no-repeat;background-size:100% 100%;color:transparent;font-weight:900;
  font-size:clamp(12px,1.1vw,21px);cursor:pointer;box-shadow:0 .18vw .3vw rgba(0,0,0,.25)
 }
+.mini-choice[data-v="was"]{background-image:url('assets/images/button-was.webp')}
+.mini-choice[data-v="were"]{background-image:url('assets/images/button-were.webp')}
 .mini-choice.sel{outline:.22vw solid #ffe04a;box-shadow:0 0 1vw #ffd84f}
 .mini-choice.ok{outline:.22vw solid #70ee65;box-shadow:0 0 1vw #58dc58}
 .mini-choice.no{outline:.22vw solid #ff6258;box-shadow:0 0 1vw #ff5148}
@@ -268,16 +279,17 @@ input[type=range]{width:100%;accent-color:#638d22;cursor:pointer}
     <button class="closex" id="volClose">×</button>
     <h3>⚙ Настройки</h3>
     <div class="volRow"><span>🎵 Музыка</span><input id="musicVol" type="range" min="0" max="100" step="5"><b id="musicPct"></b></div>
+    <div class="volRow"><span>🎼 Мелодия</span><select id="musicTrack" class="musicSelect" aria-label="Фоновая мелодия"><option value="1">Лесная 1 · 2:32</option><option value="2">Лесная 2 · 0:44</option><option value="3">Лесная 3 · 1:03</option><option value="4">Лесная 4 · 0:39</option><option value="5">Лесная 5 · 1:01</option><option value="6">Лесная 6 · 2:38</option></select><b></b></div>
     <div class="volRow"><span>✨ Эффекты</span><input id="sfxVol" type="range" min="0" max="100" step="5"><b id="sfxPct"></b></div>
     <button id="muteAll" class="game-btn red small" style="width:100%;margin-top:.7vw">🔇 Выключить всё</button>
     <button id="settingsFullBtn" class="game-btn blue small">⛶ Полный экран</button>
   </div>
 
-  <audio id="music" loop preload="none" src="assets/audio/music.mp3"></audio>
+  <audio id="music" loop preload="none" src="assets/audio/music-01.mp3"></audio>
 </div>
 
 <script>
-const IMG = {"legend":"assets/images/scene-legend.webp","map":"assets/images/scene-map.webp","level1":"assets/images/scene-level1.webp","level2":"assets/images/scene-level2.webp","level3":"assets/images/scene-level3.webp","level4":"assets/images/scene-level4.webp","level5":"assets/images/scene-level5.webp","level6":"assets/images/scene-level6.webp","final":"assets/images/scene-final.webp"};
+const IMG = {"home":"assets/images/scene-home.png","legend":"assets/images/scene-legend.webp","map":"assets/images/scene-map.webp","level1":"assets/images/scene-level1.webp","level2":"assets/images/scene-level2.webp","level3":"assets/images/scene-level3.webp","level4":"assets/images/scene-level4.webp","level5":"assets/images/scene-level5.webp","level6":"assets/images/scene-level6.webp","final":"assets/images/scene-final.webp"};
 const BTNIMG = {"was":"assets/images/button-was.webp","were":"assets/images/button-were.webp","check":"assets/images/button-check.webp","next":"assets/images/button-next.webp","hint":"assets/images/button-hint.webp"};
 
 const SFXSRC = {"click":"assets/audio/click.wav","correct":"assets/audio/correct.wav","wrong":"assets/audio/wrong.wav","leaf":"assets/audio/leaf.wav","acorn":"assets/audio/acorn.wav","hint":"assets/audio/hint.wav","bridge":"assets/audio/bridge.wav","magic":"assets/audio/magic.wav","complete":"assets/audio/complete.wav","door":"assets/audio/door.wav","steps":"assets/audio/steps.wav","victory":"assets/audio/victory.wav"};
@@ -298,6 +310,7 @@ let state = {
   screen:'home', level:0, score:0, acorns:0, unlockedLevel:1,
   musicVol: Number(localStorage.getItem('hedgehogMusicVol') ?? 40),
   sfxVol: Number(localStorage.getItem('hedgehogSfxVol') ?? 75),
+  musicTrack: Math.max(1,Math.min(6,Number(localStorage.getItem('hedgehogMusicTrack') ?? 1))),
   muted:false,
   levelData:{},
   level1Order:null,
@@ -362,6 +375,16 @@ function playSfx(k, duck=false){
 function startMusic(){
   music.volume=state.muted?0:state.musicVol/100;
   music.play().catch(()=>{});
+}
+function setMusicTrack(track,autoplay=false){
+  const next=Math.max(1,Math.min(6,Number(track)||1));
+  const wasPlaying=!music.paused;
+  state.musicTrack=next;
+  localStorage.setItem('hedgehogMusicTrack',String(next));
+  music.src=`assets/audio/music-${String(next).padStart(2,'0')}.mp3`;
+  music.load();
+  music.volume=state.muted?0:state.musicVol/100;
+  if(autoplay||wasPlaying)music.play().catch(()=>{});
 }
 function clickFx(){playSfx('click')}
 function showToast(msg, kind=''){
@@ -428,22 +451,14 @@ function isHinted(q){
 }
 
 function home(){
-  state.screen='home'; state.level=0; setScreenBase(IMG.legend,'blur-bg');
+  state.screen='home'; state.level=0; setScreenBase(IMG.home);
   screen.insertAdjacentHTML('beforeend',`
-    <div class="tint" style="background:rgba(6,20,12,.34)"></div>
-    <div id="homePanel" class="glass">
-      <div style="font-size:clamp(18px,1.5vw,28px);font-weight:bold;color:#8a5b20">🦔 Волшебное лесное приключение</div>
-      <h1>День ежа</h1>
-      <h2>Путешествие домой: <b>was / were</b></h2>
-      <div id="homeButtons">
-        <button class="game-btn gold" id="startBtn">START</button>
-        <button class="game-btn blue" id="legendBtn">📖 Легенда</button>
-        <button class="game-btn purple" id="settingsBtn">⚙ Настройки</button>
-      </div>
-    </div>`);
-  document.getElementById('startBtn').onclick=()=>{clickFx();startMusic();legend()};
-  document.getElementById('legendBtn').onclick=()=>{clickFx();startMusic();legend()};
-  document.getElementById('settingsBtn').onclick=()=>{clickFx();openVolume()};
+    <button class="home-art-hotspot" id="homeStartHot" aria-label="Начать игру"></button>
+    <button class="home-art-hotspot" id="homeLegendHot" aria-label="Как играть"></button>
+    <button class="home-art-hotspot" id="homeSettingsHot" aria-label="Настройки"></button>`);
+  document.getElementById('homeStartHot').onclick=()=>{clickFx();startMusic();legend()};
+  document.getElementById('homeLegendHot').onclick=()=>{clickFx();startMusic();legend()};
+  document.getElementById('homeSettingsHot').onclick=()=>{clickFx();openVolume()};
   updateHUD();
 }
 function legend(){
@@ -495,7 +510,7 @@ function showMap(nextLevel=state.unlockedLevel, animate=true){
   updateHUD();
 }
 function hintButton(handler){
-  const b=document.createElement('button');b.id='hintBtn';b.className='game-btn gold';b.innerHTML='💡 Подсказка';
+  const b=document.createElement('button');b.id='hintBtn';b.className='img-button';b.setAttribute('aria-label','Подсказка');b.innerHTML=`<img src="${BTNIMG.hint}" alt="Подсказка">`;
   b.onclick=()=>{clickFx();playSfx('hint',true);handler()};
   stage.appendChild(b);return b;
 }
@@ -503,10 +518,10 @@ function removeHint(){document.getElementById('hintBtn')?.remove()}
 function actionButtons(checkFn,nextFn=null,nextText='NEXT'){
   let bar=document.getElementById('actionBar'); if(bar)bar.remove();
   bar=document.createElement('div');bar.id='actionBar';
-  const c=document.createElement('button');c.className='game-btn purple';c.textContent='✓ CHECK';c.onclick=()=>{clickFx();checkFn()};
+  const c=document.createElement('button');c.className='img-button';c.setAttribute('aria-label','Проверить');c.innerHTML=`<img src="${BTNIMG.check}" alt="CHECK">`;c.onclick=()=>{clickFx();checkFn()};
   bar.appendChild(c);
   if(nextFn){
-    const n=document.createElement('button');n.className='game-btn blue';n.textContent=nextText+' ❯';n.onclick=()=>{clickFx();nextFn()};
+    const n=document.createElement('button');n.className='img-button';n.setAttribute('aria-label',nextText);n.innerHTML=`<img src="${BTNIMG.next}" alt="${nextText}">`;n.onclick=()=>{clickFx();nextFn()};
     bar.appendChild(n);
   }
   stage.appendChild(bar); return bar;
@@ -891,6 +906,7 @@ function openVolume(){
   const p=document.getElementById('volumePanel');p.classList.remove('hidden');
   document.getElementById('musicVol').value=state.musicVol;
   document.getElementById('sfxVol').value=state.sfxVol;
+  document.getElementById('musicTrack').value=String(state.musicTrack);
   setMusicVolume(state.musicVol);setSfxVolume(state.sfxVol);
 }
 async function toggleFullscreen(){
@@ -903,6 +919,7 @@ async function toggleFullscreen(){
 }
 document.getElementById('musicVol').oninput=e=>setMusicVolume(e.target.value);
 document.getElementById('sfxVol').oninput=e=>setSfxVolume(e.target.value);
+document.getElementById('musicTrack').onchange=e=>{clickFx();setMusicTrack(e.target.value,true)};
 document.getElementById('volClose').onclick=()=>{clickFx();document.getElementById('volumePanel').classList.add('hidden')};
 document.getElementById('settingsFullBtn').onclick=()=>{
  clickFx();toggleFullscreen();
@@ -922,7 +939,7 @@ const keyMap={
  click:'click',correct:'correct',wrong:'wrong',leaf:'leaf',acorn:'acorn',hint:'hint',
  bridge:'bridge',magic:'magic',complete:'complete',door:'door',steps:'steps',victory:'victory'
 };
-setMusicVolume(state.musicVol);setSfxVolume(state.sfxVol);
+setMusicTrack(state.musicTrack,false);setMusicVolume(state.musicVol);setSfxVolume(state.sfxVol);
 home();
 </script>
 </body>

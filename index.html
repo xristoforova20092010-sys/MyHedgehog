@@ -217,26 +217,27 @@ input[type=range]{width:100%;accent-color:#638d22;cursor:pointer}
 #mapContinue{display:none!important}
 
 #level1SinglePanel{
-  position:absolute;z-index:34;left:29.5%;top:38.6%;width:46%;height:36.8%;
+  position:absolute;z-index:34;left:22%;top:16.5%;width:64%;height:67%;
   background:linear-gradient(180deg,rgba(255,244,204,.995),rgba(237,205,135,.995));
   border:.28vw solid #734018;border-radius:1.5vw;
   box-shadow:0 .8vw 1.8vw rgba(0,0,0,.42), inset 0 0 0 .18vw rgba(255,255,255,.55);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:1.25vw 2vw;text-align:center;color:#3e220f;
+  display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
+  padding:1vw 1.4vw;text-align:center;color:#3e220f;
 }
 #level1Counter{
   position:absolute;top:.65vw;left:50%;transform:translateX(-50%);
   font-weight:900;color:#704117;font-size:clamp(13px,1.05vw,20px);
 }
 #level1Title{
-  color:#315d22;font-size:clamp(18px,1.55vw,30px);font-weight:900;
-  margin:.2vw 0 .4vw;
+  color:#315d22;font-size:clamp(17px,1.45vw,28px);font-weight:900;
+  margin:.15vw 0 .55vw;
 }
-#level1Sentence{
-  width:92%;font-size:clamp(25px,2.35vw,46px);line-height:1.15;font-weight:900;
-  margin:.6vw 0 1.2vw;text-shadow:0 .05vw #fff7d6;
-}
-#level1Choices{display:flex;gap:1.25vw;align-items:center;justify-content:center}
+#level1Grid{display:grid;grid-template-columns:1fr 1fr;gap:.38vw .7vw;min-height:0}
+.level1-row{display:grid;grid-template-columns:1fr 4.2vw 4.2vw;align-items:center;gap:.35vw;padding:.28vw .45vw;border:.08vw solid rgba(126,78,31,.34);border-radius:.58vw;background:rgba(255,255,255,.34);text-align:left}
+.level1-row-text{font-size:clamp(12px,1vw,19px);font-weight:800;line-height:1.12}
+.level1-row .img-button{width:4.2vw;aspect-ratio:105/55;border-radius:.5vw}
+.level1-row .img-button img{object-fit:contain;width:100%;height:100%}
+#level1Result{min-height:1.75vw;margin-top:.45vw;font-size:clamp(13px,1.08vw,21px);font-weight:900;color:#583017}
 .img-button{
   appearance:none;border:0;background:none;padding:0;margin:0;cursor:pointer;
   border-radius:1vw;transition:.14s transform,.14s filter,.14s box-shadow;
@@ -251,13 +252,13 @@ input[type=range]{width:100%;accent-color:#638d22;cursor:pointer}
 
 .level1-choice-img{width:8.2vw;min-width:86px}
 #level1HintImage{
-  position:absolute;z-index:47;left:15.7%;bottom:4.1%;width:15%;
+  position:absolute;z-index:47;left:21.5%;bottom:3.1%;width:15%;
 }
 #level1CheckImage{
-  position:absolute;z-index:48;left:32.6%;bottom:8.8%;width:18.4%;
+  position:absolute;z-index:48;left:40.2%;bottom:3.1%;width:18.4%;
 }
 #level1NextImage{
-  position:absolute;z-index:48;left:51.8%;bottom:8.8%;width:17.6%;
+  position:absolute;z-index:48;left:62%;bottom:3.1%;width:17.6%;
 }
 
 #settingsFullBtn{width:100%;margin-top:.55vw}
@@ -289,7 +290,7 @@ input[type=range]{width:100%;accent-color:#638d22;cursor:pointer}
 </div>
 
 <script>
-const IMG = {"home":"assets/images/scene-home.png","legend":"assets/images/scene-legend.webp","map":"assets/images/scene-map.webp","level1":"assets/images/scene-level1.webp","level2":"assets/images/scene-level2.webp","level3":"assets/images/scene-level3.webp","level4":"assets/images/scene-level4.webp","level5":"assets/images/scene-level5.webp","level6":"assets/images/scene-level6.webp","final":"assets/images/scene-final.webp"};
+const IMG = {"home":"assets/images/scene-home-v2.png","legend":"assets/images/scene-legend.webp","map":"assets/images/scene-map.webp","level1":"assets/images/scene-level1.webp","level2":"assets/images/scene-level2.webp","level3":"assets/images/scene-level3.webp","level4":"assets/images/scene-level4.webp","level5":"assets/images/scene-level5.webp","level6":"assets/images/scene-level6.webp","final":"assets/images/scene-final.webp"};
 const BTNIMG = {"was":"assets/images/button-was.webp","were":"assets/images/button-were.webp","check":"assets/images/button-check.webp","next":"assets/images/button-next.webp","hint":"assets/images/button-hint.webp"};
 
 const SFXSRC = {"click":"assets/audio/click.wav","correct":"assets/audio/correct.wav","wrong":"assets/audio/wrong.wav","leaf":"assets/audio/leaf.wav","acorn":"assets/audio/acorn.wav","hint":"assets/audio/hint.wav","bridge":"assets/audio/bridge.wav","magic":"assets/audio/magic.wav","complete":"assets/audio/complete.wav","door":"assets/audio/door.wav","steps":"assets/audio/steps.wav","victory":"assets/audio/victory.wav"};
@@ -324,7 +325,7 @@ function later(fn,delay){
 }
 
 const correctAnswers = {
-  1:['was','were','was','were','was'],
+  1:['was','were','was','were','was','was','were','was','were','were'],
   2:['was','was','were'],
   4:['was','were','were','was','was','was','were'],
   5:['was','was','were','were','was'],
@@ -335,13 +336,18 @@ const mapPos = {
 };
 const LEVEL1_ITEMS = [
   {id:'food', text:'The food ... bad.', answer:'was'},
-  {id:'mary', text:'Mary with her mother ... at a cafe.', answer:'were'},
+  {id:'mary', text:'Mary and her mother ... at a cafe.', answer:'were'},
   {id:'film', text:'... the film interesting?', answer:'was'},
   {id:'sisters', text:'My sisters ... not happy yesterday.', answer:'were'},
-  {id:'who', text:'Who ... the best student in the class?', answer:'was'}
+  {id:'who', text:'Who ... the best student in the class?', answer:'was'},
+  {id:'home', text:'I ... at home last night.', answer:'was'},
+  {id:'friends', text:'You and Tom ... good friends.', answer:'were'},
+  {id:'weather', text:'The weather ... warm yesterday.', answer:'was'},
+  {id:'children', text:'The children ... in the garden.', answer:'were'},
+  {id:'we', text:'We ... very tired after the walk.', answer:'were'}
 ];
 function shuffledLevel1Order(){
-  const a=[0,1,2,3,4];
+  const a=Array.from({length:LEVEL1_ITEMS.length},(_,i)=>i);
   for(let i=a.length-1;i>0;i--){
     const j=Math.floor(Math.random()*(i+1));
     [a[i],a[j]]=[a[j],a[i]];
@@ -410,8 +416,8 @@ function updateHUD(){
 
   document.getElementById('homeHot').style.display=showHud?'block':'none';
 
-  // Звук доступен на каждом экране; полноэкранный режим находится только в настройках.
-  document.getElementById('soundHot').style.display='block';
+  // На главном экране звук и полный экран доступны только через «Настройки».
+  document.getElementById('soundHot').style.display=showHud?'block':'none';
   document.getElementById('fullHot').style.display='none';
 }
 function setScreenBase(img, extraClass=''){
@@ -588,107 +594,83 @@ function checkHits(ctx,answers,onDone){
 function level1(){
   setScreenBase(IMG.level1);
   cleanupFloating();
-
   if(!state.level1Order) state.level1Order=shuffledLevel1Order();
-
-  let pos=0;
-  let selected=null;
-  let checkedCorrect=false;
-
+  const selections={};
+  let finished=false;
   screen.insertAdjacentHTML('beforeend',`
     <div id="level1SinglePanel">
-      <div id="level1Counter"></div>
       <div id="level1Title">Испытание 1 · Лесная тропинка</div>
-      <div id="level1Sentence"></div>
-      <div id="level1Choices">
-        <button class="img-button level1-choice-img" id="l1Was" aria-label="was"><img src="${BTNIMG.was}" alt="WAS"></button>
-        <button class="img-button level1-choice-img" id="l1Were" aria-label="were"><img src="${BTNIMG.were}" alt="WERE"></button>
-      </div>
+      <div id="level1Grid"></div>
+      <div id="level1Result">Выбери WAS или WERE во всех предложениях.</div>
     </div>
     <button class="img-button" id="level1HintImage" aria-label="Подсказка"><img src="${BTNIMG.hint}" alt="Подсказка"></button>
     <button class="img-button" id="level1CheckImage" aria-label="Check"><img src="${BTNIMG.check}" alt="CHECK"></button>
     <button class="img-button disabled" id="level1NextImage" aria-label="Next"><img src="${BTNIMG.next}" alt="NEXT"></button>
   `);
-
-  const wasBtn=document.getElementById('l1Was');
-  const wereBtn=document.getElementById('l1Were');
+  const grid=document.getElementById('level1Grid');
+  const result=document.getElementById('level1Result');
   const checkBtn=document.getElementById('level1CheckImage');
   const nextBtn=document.getElementById('level1NextImage');
   const hintBtnImg=document.getElementById('level1HintImage');
-
-  function currentItem(){
-    return LEVEL1_ITEMS[state.level1Order[pos]];
-  }
-  function clearChoiceStyles(){
-    [wasBtn,wereBtn].forEach(b=>b.classList.remove('selected','correct','wrong','hint-glow'));
-  }
-  function renderQuestion(){
-    selected=null; checkedCorrect=false;
-    clearChoiceStyles();
-    nextBtn.classList.add('disabled');
-    const item=currentItem();
-    document.getElementById('level1Counter').textContent=`Вопрос ${pos+1} из 5`;
-    document.getElementById('level1Sentence').textContent=item.text;
-  }
-  function choose(value,btn){
-    if(checkedCorrect)return;
-    playSfx('click');
-    clearChoiceStyles();
-    selected=value;btn.classList.add('selected');
-  }
-
-  wasBtn.onclick=()=>choose('was',wasBtn);
-  wereBtn.onclick=()=>choose('were',wereBtn);
-
+  state.level1Order.forEach((itemIndex,rowIndex)=>{
+    const item=LEVEL1_ITEMS[itemIndex];
+    const row=document.createElement('div');
+    row.className='level1-row';
+    row.innerHTML=`<div class="level1-row-text">${rowIndex+1}. ${item.text}</div>
+      <button class="img-button" data-answer="was" aria-label="WAS для предложения ${rowIndex+1}"><img src="${BTNIMG.was}" alt="WAS"></button>
+      <button class="img-button" data-answer="were" aria-label="WERE для предложения ${rowIndex+1}"><img src="${BTNIMG.were}" alt="WERE"></button>`;
+    row.querySelectorAll('button').forEach(button=>button.onclick=()=>{
+      if(finished)return;
+      clickFx();
+      row.querySelectorAll('button').forEach(b=>b.classList.remove('selected','correct','wrong','hint-glow'));
+      const value=button.dataset.answer;
+      selections[item.id]=value;
+      button.classList.add(value===item.answer?'correct':'wrong');
+      playSfx(value===item.answer?'correct':'wrong');
+    });
+    grid.appendChild(row);
+  });
   hintBtnImg.onclick=()=>{
+    if(finished)return;
     clickFx();playSfx('hint',true);
-    const item=currentItem();
+    const targetRow=[...grid.children].find((row,rowIndex)=>{
+      const item=LEVEL1_ITEMS[state.level1Order[rowIndex]];
+      return selections[item.id]!==item.answer;
+    });
+    if(!targetRow)return showToast('Все ответы уже правильные!');
+    const rowIndex=[...grid.children].indexOf(targetRow);
+    const item=LEVEL1_ITEMS[state.level1Order[rowIndex]];
     markHinted(item.id);
-    const good=item.answer==='was'?wasBtn:wereBtn;
-    good.classList.add('hint-glow');
-    setTimeout(()=>good.classList.remove('hint-glow'),3000);
-    showToast('Подсказка показала правильный ответ. За этот вопрос листочек не начислится.');
+    const good=targetRow.querySelector(`[data-answer="${item.answer}"]`);
+    good.classList.remove('wrong');good.classList.add('hint-glow');
+    showToast(`Подсказка: в предложении ${rowIndex+1} нужен ${item.answer.toUpperCase()}.`);
   };
-
   checkBtn.onclick=()=>{
     clickFx();
-    if(checkedCorrect)return showToast('Ответ уже проверен. Нажми NEXT.');
-    if(!selected)return showToast('Сначала выбери WAS или WERE.');
-
-    const item=currentItem();
-    const chosen=selected==='was'?wasBtn:wereBtn;
-
-    if(selected===item.answer){
-      clearChoiceStyles();
-      chosen.classList.add('correct');
-      checkedCorrect=true;
-      awardLeaf(item.id,isHinted(item.id));
-      playSfx('correct');
-      nextBtn.classList.remove('disabled');
-      showToast('Верно! Нажми NEXT.');
-    }else{
-      clearChoiceStyles();
-      chosen.classList.add('wrong');
-      checkedCorrect=true;
-      playSfx('wrong');
-      nextBtn.classList.remove('disabled');
-      showToast('Неверно. Нажми NEXT.');
-    }
+    let correct=0;
+    LEVEL1_ITEMS.forEach(item=>{
+      if(selections[item.id]===item.answer){
+        correct++;
+        awardLeaf(item.id,isHinted(item.id));
+      }
+    });
+    const wrong=LEVEL1_ITEMS.length-correct;
+    const leaves=state.levelData[1]?.awarded?.size||0;
+    result.textContent=`Правильно: ${correct} · Неправильно: ${wrong} · Заработано листочков: ${leaves}`;
+    result.style.color=wrong===0?'#2f7427':'#8b331f';
+    finished=true;
+    grid.querySelectorAll('button').forEach(b=>b.disabled=true);
+    hintBtnImg.classList.add('disabled');
+    checkBtn.classList.add('disabled');
+    nextBtn.classList.remove('disabled');
+    playSfx(wrong===0?'complete':'acorn',true);
   };
-
   nextBtn.onclick=()=>{
-    if(!checkedCorrect)return;
+    if(!finished)return;
     clickFx();
-    if(pos<4){
-      pos++;
-      renderQuestion();
-    }else{
-      showComplete(1);
-      later(()=>{cleanupFloating();showMap(2,true)},1550);
-    }
+    showComplete(1);
+    later(()=>{cleanupFloating();showMap(2,true)},1550);
   };
-
-  renderQuestion();
 }
 function level2(){
   setScreenBase(IMG.level2);

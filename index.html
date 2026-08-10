@@ -217,27 +217,24 @@ input[type=range]{width:100%;accent-color:#638d22;cursor:pointer}
 #mapContinue{display:none!important}
 
 #level1SinglePanel{
-  position:absolute;z-index:34;left:22%;top:16.5%;width:64%;height:67%;
+  position:absolute;z-index:34;left:29.5%;top:35%;width:46%;height:39%;
   background:linear-gradient(180deg,rgba(255,244,204,.995),rgba(237,205,135,.995));
   border:.28vw solid #734018;border-radius:1.5vw;
   box-shadow:0 .8vw 1.8vw rgba(0,0,0,.42), inset 0 0 0 .18vw rgba(255,255,255,.55);
-  display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
-  padding:1vw 1.4vw;text-align:center;color:#3e220f;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:1.25vw 2vw;text-align:center;color:#3e220f;
 }
 #level1Counter{
   position:absolute;top:.65vw;left:50%;transform:translateX(-50%);
   font-weight:900;color:#704117;font-size:clamp(13px,1.05vw,20px);
 }
 #level1Title{
-  color:#315d22;font-size:clamp(17px,1.45vw,28px);font-weight:900;
-  margin:.15vw 0 .55vw;
+  color:#315d22;font-size:clamp(18px,1.55vw,30px);font-weight:900;
+  margin:.2vw 0 .4vw;
 }
-#level1Grid{display:grid;grid-template-columns:1fr 1fr;gap:.38vw .7vw;min-height:0}
-.level1-row{display:grid;grid-template-columns:1fr 4.2vw 4.2vw;align-items:center;gap:.35vw;padding:.28vw .45vw;border:.08vw solid rgba(126,78,31,.34);border-radius:.58vw;background:rgba(255,255,255,.34);text-align:left}
-.level1-row-text{font-size:clamp(12px,1vw,19px);font-weight:800;line-height:1.12}
-.level1-row .img-button{width:4.2vw;aspect-ratio:105/55;border-radius:.5vw}
-.level1-row .img-button img{object-fit:contain;width:100%;height:100%}
-#level1Result{min-height:1.75vw;margin-top:.45vw;font-size:clamp(13px,1.08vw,21px);font-weight:900;color:#583017}
+#level1Sentence{width:94%;font-size:clamp(24px,2.25vw,44px);line-height:1.15;font-weight:900;margin:.6vw 0 1.15vw;text-shadow:0 .05vw #fff7d6}
+#level1Choices{display:flex;gap:1.25vw;align-items:center;justify-content:center}
+#level1QuestionStatus{min-height:1.5vw;margin-top:.65vw;font-size:clamp(13px,1.05vw,20px);font-weight:900;color:#71421d}
 .img-button{
   appearance:none;border:0;background:none;padding:0;margin:0;cursor:pointer;
   border-radius:1vw;transition:.14s transform,.14s filter,.14s box-shadow;
@@ -252,14 +249,21 @@ input[type=range]{width:100%;accent-color:#638d22;cursor:pointer}
 
 .level1-choice-img{width:8.2vw;min-width:86px}
 #level1HintImage{
-  position:absolute;z-index:47;left:21.5%;bottom:3.1%;width:15%;
+  position:absolute;z-index:47;left:18%;bottom:4%;width:15%;
 }
 #level1CheckImage{
-  position:absolute;z-index:48;left:40.2%;bottom:3.1%;width:18.4%;
+  position:absolute;z-index:48;left:41%;bottom:4%;width:18.4%;
 }
 #level1NextImage{
-  position:absolute;z-index:48;left:62%;bottom:3.1%;width:17.6%;
+  position:absolute;z-index:48;left:63%;bottom:4%;width:17.6%;
 }
+#level1ResultScreen{position:absolute;inset:0;z-index:80}
+#level1ResultScreen .result-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#level1ResultContent{position:absolute;left:39%;top:18%;width:54%;height:64%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#43230f;padding:2vw}
+#level1ResultContent h2{margin:0 0 1vw;color:#315d22;font-size:clamp(30px,3.2vw,62px);text-shadow:0 .08vw #fff4bd}
+#level1ResultStats{font-size:clamp(18px,1.65vw,32px);font-weight:900;line-height:1.55}
+#level1ResultMessage{margin:.9vw 0 1.3vw;font-size:clamp(15px,1.25vw,24px);font-weight:800;color:#6a3518}
+#level1ResultAction{width:18vw;min-width:170px}
 
 #settingsFullBtn{width:100%;margin-top:.55vw}
 
@@ -290,8 +294,8 @@ input[type=range]{width:100%;accent-color:#638d22;cursor:pointer}
 </div>
 
 <script>
-const IMG = {"home":"assets/images/scene-home-v2.png","legend":"assets/images/scene-legend.webp","map":"assets/images/scene-map.webp","level1":"assets/images/scene-level1.webp","level2":"assets/images/scene-level2.webp","level3":"assets/images/scene-level3.webp","level4":"assets/images/scene-level4.webp","level5":"assets/images/scene-level5.webp","level6":"assets/images/scene-level6.webp","final":"assets/images/scene-final.webp"};
-const BTNIMG = {"was":"assets/images/button-was.webp","were":"assets/images/button-were.webp","check":"assets/images/button-check.webp","next":"assets/images/button-next.webp","hint":"assets/images/button-hint.webp"};
+const IMG = {"home":"assets/images/scene-home-v2.png","legend":"assets/images/scene-legend.webp","map":"assets/images/scene-map-v2.png","level1":"assets/images/scene-level1.webp","level1Result":"assets/images/scene-level1-result.png","level2":"assets/images/scene-level2.webp","level3":"assets/images/scene-level3.webp","level4":"assets/images/scene-level4.webp","level5":"assets/images/scene-level5.webp","level6":"assets/images/scene-level6.webp","final":"assets/images/scene-final.webp"};
+const BTNIMG = {"was":"assets/images/button-was.webp","were":"assets/images/button-were.webp","check":"assets/images/button-check.webp","next":"assets/images/button-next.webp","hint":"assets/images/button-hint.webp","retry":"assets/images/button-retry.png"};
 
 const SFXSRC = {"click":"assets/audio/click.wav","correct":"assets/audio/correct.wav","wrong":"assets/audio/wrong.wav","leaf":"assets/audio/leaf.wav","acorn":"assets/audio/acorn.wav","hint":"assets/audio/hint.wav","bridge":"assets/audio/bridge.wav","magic":"assets/audio/magic.wav","complete":"assets/audio/complete.wav","door":"assets/audio/door.wav","steps":"assets/audio/steps.wav","victory":"assets/audio/victory.wav"};
 const stage = document.getElementById('stage');
@@ -595,82 +599,103 @@ function level1(){
   setScreenBase(IMG.level1);
   cleanupFloating();
   if(!state.level1Order) state.level1Order=shuffledLevel1Order();
-  const selections={};
-  let finished=false;
+  const answers=[];
+  let pos=0;
+  let answered=false;
   screen.insertAdjacentHTML('beforeend',`
     <div id="level1SinglePanel">
+      <div id="level1Counter"></div>
       <div id="level1Title">Испытание 1 · Лесная тропинка</div>
-      <div id="level1Grid"></div>
-      <div id="level1Result">Выбери WAS или WERE во всех предложениях.</div>
+      <div id="level1Sentence"></div>
+      <div id="level1Choices">
+        <button class="img-button level1-choice-img" id="l1Was" aria-label="WAS"><img src="${BTNIMG.was}" alt="WAS"></button>
+        <button class="img-button level1-choice-img" id="l1Were" aria-label="WERE"><img src="${BTNIMG.were}" alt="WERE"></button>
+      </div>
+      <div id="level1QuestionStatus">Выбери правильный вариант.</div>
     </div>
     <button class="img-button" id="level1HintImage" aria-label="Подсказка"><img src="${BTNIMG.hint}" alt="Подсказка"></button>
-    <button class="img-button" id="level1CheckImage" aria-label="Check"><img src="${BTNIMG.check}" alt="CHECK"></button>
+    <button class="img-button disabled" id="level1CheckImage" aria-label="Check"><img src="${BTNIMG.check}" alt="CHECK"></button>
     <button class="img-button disabled" id="level1NextImage" aria-label="Next"><img src="${BTNIMG.next}" alt="NEXT"></button>
   `);
-  const grid=document.getElementById('level1Grid');
-  const result=document.getElementById('level1Result');
+  const wasBtn=document.getElementById('l1Was');
+  const wereBtn=document.getElementById('l1Were');
   const checkBtn=document.getElementById('level1CheckImage');
   const nextBtn=document.getElementById('level1NextImage');
   const hintBtnImg=document.getElementById('level1HintImage');
-  state.level1Order.forEach((itemIndex,rowIndex)=>{
-    const item=LEVEL1_ITEMS[itemIndex];
-    const row=document.createElement('div');
-    row.className='level1-row';
-    row.innerHTML=`<div class="level1-row-text">${rowIndex+1}. ${item.text}</div>
-      <button class="img-button" data-answer="was" aria-label="WAS для предложения ${rowIndex+1}"><img src="${BTNIMG.was}" alt="WAS"></button>
-      <button class="img-button" data-answer="were" aria-label="WERE для предложения ${rowIndex+1}"><img src="${BTNIMG.were}" alt="WERE"></button>`;
-    row.querySelectorAll('button').forEach(button=>button.onclick=()=>{
-      if(finished)return;
-      clickFx();
-      row.querySelectorAll('button').forEach(b=>b.classList.remove('selected','correct','wrong','hint-glow'));
-      const value=button.dataset.answer;
-      selections[item.id]=value;
-      button.classList.add(value===item.answer?'correct':'wrong');
-      playSfx(value===item.answer?'correct':'wrong');
-    });
-    grid.appendChild(row);
-  });
+  const status=document.getElementById('level1QuestionStatus');
+  function item(){return LEVEL1_ITEMS[state.level1Order[pos]]}
+  function clearButtons(){[wasBtn,wereBtn].forEach(b=>b.classList.remove('correct','wrong','hint-glow','disabled'))}
+  function renderQuestion(){
+    answered=false;clearButtons();nextBtn.classList.add('disabled');
+    document.getElementById('level1Counter').textContent=`Вопрос ${pos+1} из ${LEVEL1_ITEMS.length}`;
+    document.getElementById('level1Sentence').textContent=item().text;
+    status.textContent='Выбери правильный вариант.';status.style.color='#71421d';
+  }
+  function choose(value,button){
+    if(answered)return;
+    clickFx();answered=true;answers[pos]=value;
+    const correct=value===item().answer;
+    button.classList.add(correct?'correct':'wrong');
+    [wasBtn,wereBtn].forEach(b=>b.classList.add('disabled'));
+    status.textContent=correct?'Правильно!':'Неправильно.';
+    status.style.color=correct?'#2f7427':'#a02e24';
+    playSfx(correct?'correct':'wrong');
+    if(pos===LEVEL1_ITEMS.length-1)checkBtn.classList.remove('disabled');
+    else nextBtn.classList.remove('disabled');
+  }
+  wasBtn.onclick=()=>choose('was',wasBtn);
+  wereBtn.onclick=()=>choose('were',wereBtn);
   hintBtnImg.onclick=()=>{
-    if(finished)return;
+    if(answered)return showToast('Ответ уже выбран. Перейди к следующему вопросу.');
     clickFx();playSfx('hint',true);
-    const targetRow=[...grid.children].find((row,rowIndex)=>{
-      const item=LEVEL1_ITEMS[state.level1Order[rowIndex]];
-      return selections[item.id]!==item.answer;
-    });
-    if(!targetRow)return showToast('Все ответы уже правильные!');
-    const rowIndex=[...grid.children].indexOf(targetRow);
-    const item=LEVEL1_ITEMS[state.level1Order[rowIndex]];
-    markHinted(item.id);
-    const good=targetRow.querySelector(`[data-answer="${item.answer}"]`);
-    good.classList.remove('wrong');good.classList.add('hint-glow');
-    showToast(`Подсказка: в предложении ${rowIndex+1} нужен ${item.answer.toUpperCase()}.`);
+    markHinted(item().id);
+    const good=item().answer==='was'?wasBtn:wereBtn;
+    good.classList.add('hint-glow');
+    status.textContent=`Подсказка: правильный ответ — ${item().answer.toUpperCase()}.`;
+    status.style.color='#6b3b8c';
   };
+  nextBtn.onclick=()=>{
+    if(!answered||pos>=LEVEL1_ITEMS.length-1)return;
+    clickFx();pos++;renderQuestion();
+  };
+  function showLevel1Result(correct,wrong,leaves){
+    const passed=correct>=6;
+    screen.insertAdjacentHTML('beforeend',`<div id="level1ResultScreen">
+      <img class="result-bg" src="${IMG.level1Result}" alt="">
+      <div id="level1ResultContent">
+        <h2>${passed?'Этап пройден!':'Нужно попробовать ещё!'}</h2>
+        <div id="level1ResultStats">✅ Правильно: ${correct}<br>❌ Неправильно: ${wrong}<br>🍃 Листочки: ${leaves}</div>
+        <div id="level1ResultMessage">${passed?'Лесная тропинка открыта. Можно продолжать путешествие!':'Для прохождения этапа нужно не менее 6 правильных ответов.'}</div>
+        <button class="img-button" id="level1ResultAction" aria-label="${passed?'Продолжить':'Пройти этап снова'}"><img src="${passed?BTNIMG.next:BTNIMG.retry}" alt="${passed?'NEXT':'RETRY'}"></button>
+      </div></div>`);
+    document.getElementById('level1ResultAction').onclick=()=>{
+      clickFx();
+      if(passed){showComplete(1);later(()=>{cleanupFloating();showMap(2,true)},1550)}
+      else{
+        state.score=Math.max(0,state.score-leaves);
+        state.levelData[1]={awarded:new Set(),hinted:new Set()};
+        state.level1Order=shuffledLevel1Order();
+        updateHUD();showLevel(1);
+      }
+    };
+  }
   checkBtn.onclick=()=>{
+    if(answers.length<LEVEL1_ITEMS.length)return;
     clickFx();
     let correct=0;
-    LEVEL1_ITEMS.forEach(item=>{
-      if(selections[item.id]===item.answer){
+    state.level1Order.forEach((itemIndex,index)=>{
+      const current=LEVEL1_ITEMS[itemIndex];
+      if(answers[index]===current.answer){
         correct++;
-        awardLeaf(item.id,isHinted(item.id));
+        awardLeaf(current.id,isHinted(current.id));
       }
     });
     const wrong=LEVEL1_ITEMS.length-correct;
     const leaves=state.levelData[1]?.awarded?.size||0;
-    result.textContent=`Правильно: ${correct} · Неправильно: ${wrong} · Заработано листочков: ${leaves}`;
-    result.style.color=wrong===0?'#2f7427':'#8b331f';
-    finished=true;
-    grid.querySelectorAll('button').forEach(b=>b.disabled=true);
-    hintBtnImg.classList.add('disabled');
-    checkBtn.classList.add('disabled');
-    nextBtn.classList.remove('disabled');
-    playSfx(wrong===0?'complete':'acorn',true);
+    playSfx(correct>=6?'complete':'wrong',true);
+    showLevel1Result(correct,wrong,leaves);
   };
-  nextBtn.onclick=()=>{
-    if(!finished)return;
-    clickFx();
-    showComplete(1);
-    later(()=>{cleanupFloating();showMap(2,true)},1550);
-  };
+  renderQuestion();
 }
 function level2(){
   setScreenBase(IMG.level2);
